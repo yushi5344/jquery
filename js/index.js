@@ -1,5 +1,15 @@
 $(function(){
-	$('#search_button').button();
+	$('#search_button').button({
+		//disabled:true
+		//label:'搜索'
+		//icons:{
+			//primary:'ui-icon-search'
+			//secondary:'ui-icon-triangle-1-s'
+
+		//},
+		//text:false
+
+	});
 	$('#reg_a').click(function(){
 		$('#reg').dialog('open');
 	});
@@ -10,22 +20,22 @@ $(function(){
 				'提交':function(){
 					alert('正在提交中');
 				},
-				'取消':function(){
-					$(this).dialog('close');
-				}
+				// '取消':function(){
+				// 	$(this).dialog('close');
+				// }
 			},
 			//position:'left top',
-			width:500,
-			height:400,
-			minWidth:100,
-			minHeight:200,
-			show:'blind',
-			hide:'slide',
-			autoOpen:false,
-			draggable:true,//不可移动对话框
-			resizable:true,//不可以改变大小
-			modal:true,//对话框外不可操作
-			closeText:'关闭',
+			 width:320,
+			 height:340,
+			// minWidth:100,
+			// minHeight:200,
+			// show:'blind',
+			// hide:'slide',
+			 autoOpen:true,
+			// draggable:true,//不可移动对话框
+			 resizable:false,//不可以改变大小
+			 modal:true,//对话框外不可操作
+			// closeText:'关闭',
 			//dialog事件
 			/*
 			focus:function(e,ui){
@@ -62,7 +72,10 @@ $(function(){
 			}
 			*/
 		});
-	alert($('#reg').dialog('option','title'));
+		$('#reg').buttonset();
+		$('#date').datepicker();
+		$('#reg input[title]').tooltip();
+	//alert($('#reg').dialog('option','title'));
 	$('#log_a').click(function(){
 		$('#login').dialog();
 	});

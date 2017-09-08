@@ -18,7 +18,7 @@
 				<input type="text" name="search" class="search">
 			</div>	
 			<div class="header_button">
-				<input type="button" id="search_button" value="查询">
+				<btn id="search_button">查询</btn>
 			</div>
 			<div class="header_member">
 				<a href="###" id="reg_a">注册</a>  |  <a href="###" id="log_a">登录</a>
@@ -26,7 +26,32 @@
 		</div>
 	</div>
 	<div id="reg">
-		表单区
+		<form>
+		<p>
+			<label for="user">账号：</label>
+			<input type="text" name="user" class="text" id="user" title="请输入账号，不少于两位">
+			<span class="star">*</span>
+		</p>
+		<p>
+			<label for="pass">密码：</label>
+			<input type="text" name="pass" class="text" id="pass" title="请输入密码，不少于6位">
+			<span class="star">*</span>
+		</p>
+		<p>
+			<label for="email">邮箱：</label>
+			<input type="text" name="email" class="text" id="email" title="请输入邮箱">
+			<span class="star">*</span>
+		</p>
+		<p>
+			<label>性别：</label>
+			<input type="radio" name="sex" value="male" id="male" checked="checked"><label for="male">男</label></input><input type="radio" name="sex" value="female" id="female"><label for="female">女</label></input>
+			
+		</p>
+		<p>
+			<label for="date">生日：</label>
+			<input type="text" name="date" class="text" id="date" readonly="readonly">
+		</p>
+		</form>
 	</div>
 	<div id="login">
 		表单区
