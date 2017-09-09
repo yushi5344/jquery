@@ -90,24 +90,69 @@ $(function(){
 			// 	alert('打开');
 			// }
 		//});
-		var host=['aa','aaaa','aaaaa','bb'];
+		// var host=['aa','aaaa','aaaaa','bb'];
+		// $('#email').autocomplete({
+		// 	source:host,
+		// 	minLength:2,//最小触发值
+		// 	delay:100,//延迟时间
+		// 	focus:function(e,ui){
+		// 		alert('获取焦点时触发');
+		// 	},
+		// 	select:function(){
+		// 		alert('选定触发');
+		// 	},
+		// 	change:function(){
+		// 		alert('改变触发');
+		// 	},
+		// 	search:function(){
+		// 		alert('搜索完毕触发');
+		// 	}
+		// });  
 		$('#email').autocomplete({
-			source:host,
-			minLength:2,//最小触发值
-			delay:100,//延迟时间
-			focus:function(e,ui){
-				alert('获取焦点时触发');
+			delay:0,
+			autoFocus:true,
+			source:function(request,response){
+				//获取用户输入的内容
+				//alert(request.term);
+				//绑定数据源
+				var hosts=['qq.com','163.com','263.com','sina.com.cn','gmail.com','hotmail','outlook.com'],
+					term =request.term,//获取用户输入的内容
+					name=term,//邮箱的有户名
+					host='',//邮箱的域名
+					ix=term.indexOf('@'),//@的位置
+					result=[];//最终呈现的邮箱列表
+
+				//结果第一条是自己输入
+				result.push(term);
+				//当有@的时候，重新分别用户名和域名
+				if (ix>-1){
+					name=term.slice(0,ix);
+					host=term.slice(ix+1);
+				}	
+
+				if(name){
+					//如果用户已经输入@和后面的域名
+					//那么就找到相关的域名提示比如yushi5344@g,就提示yushi5344@gmail.com
+					//如果用户还没有输入@或者后面的域名
+					//那么就把所有的域名都提示出来
+					var finderHosts=[];
+					if (host) {
+						finderHosts=$.grep(hosts,function(value,index){
+							return value.indexOf(host)>-1;
+						});
+					}else{
+						finderHosts=hosts;
+					}
+					var finderHosts=$.map(finderHosts,function(value,index){
+						return name+'@'+value;
+					});
+					result=result.concat(finderHosts);
+				}
+
+
+				response(result);
 			},
-			select:function(){
-				alert('选定触发');
-			},
-			change:function(){
-				alert('改变触发');
-			},
-			search:function(){
-				alert('搜索完毕触发');
-			}
-		});  
+		});
 	//alert($('#reg').dialog('option','title'));
 	$('#log_a').click(function(){
 		$('#login').dialog();
