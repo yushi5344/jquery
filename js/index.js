@@ -31,7 +31,7 @@ $(function(){
 			// minHeight:200,
 			// show:'blind',
 			// hide:'slide',
-			 autoOpen:true,
+			 autoOpen:false,
 			// draggable:true,//不可移动对话框
 			 resizable:false,//不可以改变大小
 			 modal:true,//对话框外不可操作
@@ -199,5 +199,28 @@ $(function(){
 	//alert($('#reg').dialog('option','title'));
 	$('#log_a').click(function(){
 		$('#login').dialog();
+	});
+	$('#test').validate({
+		rules:{
+			username:{
+				required:true,
+				minlength:8,
+			},
+			email:{
+				required:true,
+				email:true
+			},
+		},
+		messages:{
+			username:{
+				required:'账号不能为空',
+				minlength:jQuery.format('账号不得小于{0}位'),
+			}
+		},
+		submitHandler:function(){
+			alert('提交');
+			//当验证成功后执行，而且阻止了默认提交
+			//一般用于ajax提交
+		}
 	});
 });
