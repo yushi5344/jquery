@@ -73,7 +73,50 @@ $(function(){
 			*/
 		});
 		$('#reg').buttonset();
-		$('#date').datepicker();
+		$('#date').datepicker({
+			dateFormat:'yy-mm-dd',
+			dayNamesMin:["日", "一", "二", "三", "四", "五", "六"],
+			monthNames:["一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月"],
+			monthNamesShort:["一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月"],
+			//appendText:'日历',
+			//showWeek:true,
+			firstDay:1,
+			//numberOfMonths:[3,2],
+			showOtherMonths:true,
+			selectOtherMonths:true,
+			changeMonth:true,
+			changeYear:true,
+			//isRTL:true,
+			showOn:'button',
+			buttonText:'日历',
+			buttonImage:'../images/calendar.gif',
+			buttonImageOnly:true,
+			showButtonPanel:true,
+			closeText:'关闭',
+			currentText:'今天',
+			nextText:'下月',
+			prevText:'上月',
+			yearSuffix:'年',
+			maxDate:'2m',
+			yearRange:'1950:2020',
+			duration:1000,
+			// beforeShow:function(){
+			// 	alert('现实之前执行');
+			// },
+			// beforeShowDay:function(date){
+			// 	if (date.getDate()==1) {
+			// 		return [false,'a','不能选择1号'];
+			// 	}else{
+			// 		return [true];
+			// 	}
+			// }
+			// onChangeMonthYear:function(year,month,inst){
+			// 	alert('日历中年份或者月份改变时激活');
+			// 	alert(inst.id);
+			// }
+
+		});
+		//alert($('#date').datepicker('getDate'));
 		//$('#reg input[title]').tooltip();
 		//$('#reg input[title]').tooltip({
 			//disabled:true
