@@ -74,7 +74,40 @@ $(function(){
 		});
 		$('#reg').buttonset();
 		$('#date').datepicker();
-		$('#reg input[title]').tooltip();
+		//$('#reg input[title]').tooltip();
+		//$('#reg input[title]').tooltip({
+			//disabled:true
+			//content:'改变title',
+			//tooltipClass:'a',
+			// position:{
+			// 	my:'left center',
+			// 	at:'right center'
+			// },
+			// show:'blind',
+			// hide:'blind',
+			//track:true,//鼠标跟随
+			// open:function(){
+			// 	alert('打开');
+			// }
+		//});
+		var host=['aa','aaaa','aaaaa','bb'];
+		$('#email').autocomplete({
+			source:host,
+			minLength:2,//最小触发值
+			delay:100,//延迟时间
+			focus:function(e,ui){
+				alert('获取焦点时触发');
+			},
+			select:function(){
+				alert('选定触发');
+			},
+			change:function(){
+				alert('改变触发');
+			},
+			search:function(){
+				alert('搜索完毕触发');
+			}
+		});  
 	//alert($('#reg').dialog('option','title'));
 	$('#log_a').click(function(){
 		$('#login').dialog();
