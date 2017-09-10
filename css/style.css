@@ -102,3 +102,10 @@ body{
 #expires{
 	margin: 0 0 0 150px;
 }
+#tabs{
+	margin: 200px;
+	border:1px solid #aaa;
+	border-top:none;
+	position:relative;
+	top:-2px;
+}

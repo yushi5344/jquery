@@ -453,4 +453,36 @@ $(function(){
 				},
 			},
 		});
+	$('#tabs').tabs({
+		//collapsible:true,//菜单折叠
+		//disabled:[0],//菜单禁用
+		//event:'mouseover',//选项卡切换事件
+		active:1,//第几个初始化
+		show:true,
+		hide:true,
+		//create:function(event,ui){
+			// for( i in ui.tab){
+			// 	document.write(i+'<br />');
+			// }
+		//},
+		//activate:function(event,ui){
+			//alert('切换到另一个活动卡后触发');
+			//alert($(ui.oldPanel.get()).html());
+			//alert($(ui.newPanel.get()).html());
+		//}
+		// beforeActivate:function(event,ui){
+		// 	alert('切换到另一个活动卡前触发');
+		// 	alert($(ui.oldPanel.get()).html());
+		// 	alert($(ui.newPanel.get()).html());
+		// }
+		// load:function(event,ui){
+		// 	alert('ajax远程加载后触发');
+		// },
+		// beforeLoad:function(event,ui){
+		// 	alert('ajax远程加载前触发');
+		// },
+	});
+	// $('#tabs').on('tabsload',function(){
+	// 	alert('ajax远程加载后触发');
+	// });
 });
