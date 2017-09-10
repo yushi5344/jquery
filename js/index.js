@@ -280,4 +280,26 @@ $(function(){
 	// 		//一般用于ajax提交
 	// 	}
 	// });
+	//$('#test').ajaxForm();
+	//ajaxForm()自动阻止了默认提交
+	//js里使用了submit()方法时，采用了ajaxSubmit()提交，此方法不会自动阻止默认提交
+	$('#test').submit(function(){
+		$(this).ajaxSubmit({
+			url:'test.php',
+			target:'#box',
+			dataType:null,
+			data:{
+				aaa:'bbb',
+			},
+			beforeSubmit:function(formData,jqForm,options){
+				//提交之前执行，一般用于数据验证
+				alert(options.url);
+				//如果数据不合法，返回FALSE，不让提交，默认true,
+			},
+			success:function(response,satatusText){
+				alert(response+'|'+satatusText);
+			},
+		});
+		return false;
+	});
 });
