@@ -18,7 +18,7 @@ $(function(){
 			title:'知问注册',
 			buttons:{
 				'提交':function(){
-					alert('正在提交中');
+					$(this).submit();
 				},
 				// '取消':function(){
 				// 	$(this).dialog('close');
@@ -71,8 +71,65 @@ $(function(){
 				alert('每次调整大小后执行');
 			}
 			*/
+		}).buttonset().validate({
+			submitHandler:function(form){
+				alert('准备提交，');
+			},
+			showErrors:function(errorMap,errorList){
+				var errors=this.numberOfInvalids();
+				if (errors>0) {
+					$('#reg').dialog('option','height',errors*20+340);
+				}else{
+					$('#reg').dialog('option','height',340);
+				}
+				this.defaultShowErrors();
+			},
+			highlight:function(element,errorClass){
+				$(element).css('border','1px solid #630');
+			},
+			unhighlight:function(element,errorClass){
+				$(element).css('border','1px solid #ccc');
+				$(element).parent().find('span').html('&nbsp;').addClass('succ');
+			},
+			errorLabelContainer:'ol.reg_error',
+			wrapper:'li',
+			rules:{
+				user:{
+					required:true,
+					minlength:2,
+				},
+				pass:{
+					required:true,
+					minlength:6,
+				},
+				email:{
+					required:true,
+					email:true,
+				},
+				date:{
+					required:true,
+					date:true
+				}
+			},
+			messages:{
+				user:{
+					required:'账号不能为空',
+					minlength:jQuery.format('账号不得小于{0}位'),
+				},
+				pass:{
+					required:'密码不能为空',
+					minlength:jQuery.format('账号不得小于{0}位'),
+				},
+				email:{
+					required:'邮箱不能为空',
+					minlength:'邮箱格式不正确',
+				},
+				date:{
+					required:'生日必选'
+				},
+			},
 		});
-		$('#reg').buttonset();
+		//$('#reg').buttonset();
 		$('#date').datepicker({
 			dateFormat:'yy-mm-dd',
 			dayNamesMin:["日", "一", "二", "三", "四", "五", "六"],
@@ -97,7 +154,7 @@ $(function(){
 			nextText:'下月',
 			prevText:'上月',
 			yearSuffix:'年',
-			maxDate:'2m',
+			maxDate:0,
 			yearRange:'1950:2020',
 			duration:1000,
 			// beforeShow:function(){
@@ -200,27 +257,27 @@ $(function(){
 	$('#log_a').click(function(){
 		$('#login').dialog();
 	});
-	$('#test').validate({
-		rules:{
-			username:{
-				required:true,
-				minlength:8,
-			},
-			email:{
-				required:true,
-				email:true
-			},
-		},
-		messages:{
-			username:{
-				required:'账号不能为空',
-				minlength:jQuery.format('账号不得小于{0}位'),
-			}
-		},
-		submitHandler:function(){
-			alert('提交');
-			//当验证成功后执行，而且阻止了默认提交
-			//一般用于ajax提交
-		}
-	});
+	// $('#test').validate({
+	// 	rules:{
+	// 		username:{
+	// 			required:true,
+	// 			minlength:8,
+	// 		},
+	// 		email:{
+	// 			required:true,
+	// 			email:true
+	// 		},
+	// 	},
+	// 	messages:{
+	// 		username:{
+	// 			required:'账号不能为空',
+	// 			minlength:jQuery.format('账号不得小于{0}位'),
+	// 		}
+	// 	},
+	// 	submitHandler:function(){
+	// 		alert('提交');
+	// 		//当验证成功后执行，而且阻止了默认提交
+	// 		//一般用于ajax提交
+	// 	}
+	// });
 });
