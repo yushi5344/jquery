@@ -73,7 +73,27 @@ $(function(){
 			*/
 		}).buttonset().validate({
 			submitHandler:function(form){
-				alert('准备提交，');
+				$(form).ajaxSubmit({
+					url:'add.php',
+					type:'post',
+					beforeSubmit:function(formData,jqForm,options){
+						$('#loading').dialog('open');
+						$('#reg').dialog('widget').find('button').eq(1).button('disable');
+					},
+					success:function(responseText,statusText){
+						if(responseText){
+							$('#reg').dialog('widget').find('button').eq(1).button('enable');
+							$('#loading').css('background','url(../images/success.gif) no-repeat 20px center').html('数据新增成功...');
+							setTimeout(function(){
+								$('#loading').dialog('close');
+								$('#reg').dialog('close');
+								$('#reg').resetForm();
+								$('#reg span.star').html('*').removeClass('succ');
+								$('#loading').css('background','url(../images/loading.gif) no-repeat 20px center').html('数据交互中...');
+							},1000);
+						}
+					},
+				});
 			},
 			showErrors:function(errorMap,errorList){
 				var errors=this.numberOfInvalids();
@@ -86,6 +106,7 @@ $(function(){
 			},
 			highlight:function(element,errorClass){
 				$(element).css('border','1px solid #630');
+				$(element).parent().find('span').html('&nbsp;').removeClass('succ');
 			},
 			unhighlight:function(element,errorClass){
 				$(element).css('border','1px solid #ccc');
@@ -130,6 +151,15 @@ $(function(){
 			},
 		});
 		//$('#reg').buttonset();
+		$('#loading').dialog({
+			autoOpen:false,
+			modal:true,
+			closeOnEscape:false,
+			resizable:false,
+			draggable:false,
+			width:180,
+			height:50,
+		}).parent().parent().find('.ui-widget-header').hide();
 		$('#date').datepicker({
 			dateFormat:'yy-mm-dd',
 			dayNamesMin:["日", "一", "二", "三", "四", "五", "六"],
@@ -283,23 +313,23 @@ $(function(){
 	//$('#test').ajaxForm();
 	//ajaxForm()自动阻止了默认提交
 	//js里使用了submit()方法时，采用了ajaxSubmit()提交，此方法不会自动阻止默认提交
-	$('#test').submit(function(){
-		$(this).ajaxSubmit({
-			url:'test.php',
-			target:'#box',
-			dataType:null,
-			data:{
-				aaa:'bbb',
-			},
-			beforeSubmit:function(formData,jqForm,options){
-				//提交之前执行，一般用于数据验证
-				alert(options.url);
-				//如果数据不合法，返回FALSE，不让提交，默认true,
-			},
-			success:function(response,satatusText){
-				alert(response+'|'+satatusText);
-			},
-		});
-		return false;
-	});
+	// $('#test').submit(function(){
+	// 	$(this).ajaxSubmit({
+	// 		url:'test.php',
+	// 		target:'#box',
+	// 		dataType:null,
+	// 		data:{
+	// 			aaa:'bbb',
+	// 		},
+	// 		beforeSubmit:function(formData,jqForm,options){
+	// 			//提交之前执行，一般用于数据验证
+	// 			alert(options.url);
+	// 			//如果数据不合法，返回FALSE，不让提交，默认true,
+	// 		},
+	// 		success:function(response,satatusText){
+	// 			alert(response+'|'+satatusText);
+	// 		},
+	// 	});
+	// 	return false;
+	// });
 });

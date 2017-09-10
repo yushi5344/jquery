@@ -91,3 +91,11 @@ body{
 	width: 28px;
 	background: url(../images/reg_succ.png) no-repeat;
 }
+#loading{
+	background: url(../images/loading.gif) no-repeat 20px center;
+	line-height: 25px;
+	font-size: 14px;
+	font-weight: bold;
+	text-indent: 30px;
+	color: #665;
+}
