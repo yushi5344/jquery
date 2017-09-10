@@ -35,7 +35,7 @@ $(function(){
 			// draggable:true,//不可移动对话框
 			 resizable:false,//不可以改变大小
 			 modal:true,//对话框外不可操作
-			// closeText:'关闭',
+			 closeText:'关闭',
 			//dialog事件
 			/*
 			focus:function(e,ui){
@@ -104,7 +104,7 @@ $(function(){
 				if (errors>0) {
 					$('#reg').dialog('option','height',errors*20+340);
 				}else{
-					$('#reg').dialog('option','height',340);
+					$('#reg').dialog('option','height',240);
 				}
 				this.defaultShowErrors();
 			},
@@ -122,6 +122,10 @@ $(function(){
 				user:{
 					required:true,
 					minlength:2,
+					remote:{
+						url:'is_user.php',
+						type:'post'
+					},
 				},
 				pass:{
 					required:true,
@@ -140,6 +144,7 @@ $(function(){
 				user:{
 					required:'账号不能为空',
 					minlength:jQuery.format('账号不得小于{0}位'),
+					remote:'账号被占用',
 				},
 				pass:{
 					required:'密码不能为空',
@@ -302,7 +307,7 @@ $(function(){
 		});
 	//alert($('#reg').dialog('option','title'));
 	$('#log_a').click(function(){
-		$('#login').dialog();
+		$('#login').dialog('open');
 	});
 	// $('#test').validate({
 	// 	rules:{
@@ -352,4 +357,100 @@ $(function(){
 	// $.cookie('user','bbb',{
 	// 	expires:7
 	// });
+	$('#login').dialog({
+			title:'知问登录',
+			buttons:{
+				'提交':function(){
+					$(this).submit();
+				},
+			},
+			 width:320,
+			 height:240,
+			 autoOpen:false,
+			 resizable:false,//不可以改变大小
+			 modal:true,//对话框外不可操作
+		}).buttonset().validate({
+			submitHandler:function(form){
+				$(form).ajaxSubmit({
+					url:'login.php',
+					type:'post',
+					beforeSubmit:function(formData,jqForm,options){
+						$('#loading').dialog('open');
+						$('#login').dialog('widget').find('button').eq(1).button('disable');
+					},
+					success:function(responseText,statusText){
+						if(responseText){
+							$('#login').dialog('widget').find('button').eq(1).button('enable');
+							$('#loading').css('background','url(../images/success.gif) no-repeat 20px center').html('登录成功...');
+							if ($('#expires').is(':checked')) {
+								$.cookie('user',$('#login_user').val(),{
+									expires:7,
+								});
+							}else{
+								$.cookie('user',$('#login_user').val());
+							}
+							setTimeout(function(){
+								$('#loading').dialog('close');
+								$('#login').dialog('close');
+								$('#login').resetForm();
+								$('#login span.star').html('*').removeClass('succ');
+								$('#loading').css('background','url(../images/loading.gif) no-repeat 20px center').html('数据交互中...');
+								$('#member,#logout').show();
+								$('#reg_a,#log_a').hide();
+								$('#member').html($.cookie('user'));
+							},1000);
+						}
+					},
+				});
+			},
+			showErrors:function(errorMap,errorList){
+				var errors=this.numberOfInvalids();
+				if (errors>0) {
+					$('#lgoin').dialog('option','height',errors*20+240);
+				}else{
+					$('#lgoin').dialog('option','height',240);
+				}
+				this.defaultShowErrors();
+			},
+			highlight:function(element,errorClass){
+				$(element).css('border','1px solid #630');
+				$(element).parent().find('span').html('&nbsp;').removeClass('succ');
+			},
+			unhighlight:function(element,errorClass){
+				$(element).css('border','1px solid #ccc');
+				$(element).parent().find('span').html('&nbsp;').addClass('succ');
+			},
+			errorLabelContainer:'ol.login_error',
+			wrapper:'li',
+			rules:{
+				login_user:{
+					required:true,
+					minlength:2,
+				},
+				login_pass:{
+					required:true,
+					minlength:6,
+					remote:{
+						url:'login.php',
+						type:'post',
+						data:{
+							login_user:function(){
+								return $('#login_user').val();
+							},
+						},
+					},
+				},
+			},
+			messages:{
+				login_user:{
+					required:'账号不能为空',
+					minlength:jQuery.format('账号不得小于{0}位'),
+				},
+				login_pass:{
+					required:'密码不能为空',
+					minlength:jQuery.format('密码不得小于{0}位'),
+					remote:'账号或密码错误',
+				},
+			},
+		});
 });
