@@ -102,10 +102,25 @@ body{
 #expires{
 	margin: 0 0 0 150px;
 }
+#main{
+	width: 800px;
+	margin: 0 auto;
+	padding: 0 0 10px 0;
+}
+#main .main_left{
+	width:600px;
+	float: left;
+}
+#main .main_right{
+	width:200px;
+	float: right;
+}
 #tabs{
-	margin: 200px;
 	border:1px solid #aaa;
 	border-top:none;
 	position:relative;
 	top:-2px;
+}
+#accordion{
+	
 }

@@ -485,4 +485,8 @@ $(function(){
 	// $('#tabs').on('tabsload',function(){
 	// 	alert('ajax远程加载后触发');
 	// });
+	$('#accordion').accordion({
+		collapsible:true,
+		event:'mouseover',
+	});
 });
