@@ -53,29 +53,29 @@ body{
 	text-decoration: none;
 	color: #555;
 }
-#reg,#login{
+#reg,#login,#question{
 	padding: 15px 0 0 15px;
 }
-#reg p,#login p{
+#reg p,#login p,#question p{
 	margin: 10px 0;
 	padding: 0;
 }
-#reg p label,#login p label{
+#reg p label,#login p label,#question p label{
 	font-size: 14px;
 	color:#666;
 }
 .star{
 	color:red;
 }
-#reg ol,#login ol{
+#reg ol,#login ol,#question ol{
 	margin: 0;
 	padding-left: 20px;
 	color:maroon;
 }
-#reg ol li,#login ol li{
+#reg ol li,#login ol li,#question ol li{
 	height:20px;
 }
-#reg .text,#login .text{
+#reg .text,#login .text,#question .text{
 	border-radius: 4px;
 	border: 1px solid #ccc;
 	background: #fff;
@@ -93,6 +93,14 @@ body{
 }
 #loading{
 	background: url(../images/loading.gif) no-repeat 20px center;
+	line-height: 25px;
+	font-size: 14px;
+	font-weight: bold;
+	text-indent: 30px;
+	color: #665;
+}
+#error{
+	background: url(../images/error.png) no-repeat 20px center;
 	line-height: 25px;
 	font-size: 14px;
 	font-weight: bold;

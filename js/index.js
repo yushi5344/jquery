@@ -10,6 +10,48 @@ $(function(){
 		//text:false
 
 	});
+	$('#question_button').button({
+		icons:{
+			primary:'ui-icon-lightpulb'
+		}
+	}).click(function(){
+		if ($.cookie('user')) {
+
+		}else{
+			$('#error').dialog('open');
+			setTimeout(function(){
+			$('#error').dialog('close');
+			$('#login').dialog('open');
+		},1000);
+		}
+	});
+
+	$('#question').dialog({
+		buttons:{
+			'发布':function(){
+				$(this).submit();
+			},
+		},
+		 width:500,
+		 height:360,
+		 autoOpen:true,
+		 resizable:false,//不可以改变大小
+		 modal:true,//
+	});
+	 // $('#edit').editable({
+	 // 	inlineMode: false,
+	 // 	 alwaysBlank: true,
+	 // 	});
+
+	$('#error').dialog({
+			autoOpen:false,
+			modal:true,
+			closeOnEscape:false,
+			resizable:false,
+			draggable:false,
+			width:180,
+			height:80,
+		}).parent().find('.ui-widget-header').hide();
 	$('#reg_a').click(function(){
 		$('#reg').dialog('open');
 	});
@@ -181,7 +223,7 @@ $(function(){
 			draggable:false,
 			width:180,
 			height:50,
-		}).parent().parent().find('.ui-widget-header').hide();
+		}).parent().find('.ui-widget-header').hide();
 		$('#date').datepicker({
 			dateFormat:'yy-mm-dd',
 			dayNamesMin:["日", "一", "二", "三", "四", "五", "六"],
@@ -490,3 +532,40 @@ $(function(){
 		event:'mouseover',
 	});
 });
+$(pageInit);
+function pageInit()
+{
+	$('#editorMode').change(updateAll);
+	$('#update').click(updateAll);
+	$('#varSetup').find('input,select').focus(function(){$(this).select();}).keypress(function(ev){if(ev.which==13)updateAll();});
+	$('#source').focus(function(){$(this).select();});
+	$('#frmSetup').submit(function(){return false;}).bind('reset',function(){setTimeout(updateAll,10);});
+	updateAll();
+}
+function toggleDisplay(id){$('#'+id).toggle(100);}
+function updateAll()
+{
+	var arrVar=[],sVar,sJSInit,sInit,textareaID=$('input[name=id]').val();
+	$('#varSetup fieldset').find('input,select').each(function(){
+		var name=this.name,elem=$(this),value=elem.val();
+		if(name!='id'&&value!=''&&!elem.find('option:selected').text().match(/(default)/i))
+		{
+			if(elem.attr('class')=='text')value="'"+value+"'";
+			arrVar.push(name+':'+value);
+		}
+	});
+	sVar=arrVar.join(',');
+	var editor=$('textarea[name=preview]')[0].editor;
+	if(editor)editor.getSource();
+	$('textarea[name=preview]').attr('id',textareaID).xheditor(false);
+	sJSInit="$('#"+textareaID+"').xheditor("+(sVar?'{'+sVar+'}':'')+');';
+	if($('#editorMode').val()==1)
+	{
+		sInit=' class="xheditor'+(sVar?' {'+sVar+'}':'')+'"';
+		sInit=sInit.replace(/(.+?xheditor)(.+?)tools:'(simple|mini)',?(.+?)/i,'$1-$3$2$4');
+	}
+	else sInit=sJSInit;
+	$('link[id^=xheCSS]').remove();
+	try{eval(sJSInit);}catch(e){}
+	$('#source').val(sInit);
+}
